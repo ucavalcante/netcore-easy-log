@@ -15,7 +15,7 @@ namespace ncel
                 DiretorioLogs = Directory.GetCurrentDirectory() + "\\Logs"
             };
             //ToDo Create a way to Get Previous caller Method
-            var local = "InConstruction";
+            var local = new StackFrame(1, true).GetMethod().Name;
             DirectoryInfo log = new DirectoryInfo(cfg.DiretorioLogs);
             if (log.Exists)
             {
