@@ -10,28 +10,31 @@ namespace ncel
         public static void Information(string msgToLog)
         {
             var level = LogLevel.Information;
+            try
+            {
+                var line = $"[{DateTime.Now}][{level.ToString()}][{CallStackExtraction(level)}|'{msgToLog}']";
+                StoreLineInFile(DestinationPath(), line);
+            }
+            catch (Exception ex)
+            {
+                NCELFailToLog(msgToLog, CallStackExtraction(level), ex);
+                Console.WriteLine($"Fail to Log With current config, trying to log in this path{DefaultLogFilePath}");
+            }
+        }
+        private static string DestinationPath()
+        {
             string sDiretorioLog = Directory.GetCurrentDirectory() + "\\Logs";
             //ToDo Create a config method
             var cfg = new
             {
                 DiretorioLogs = Directory.GetCurrentDirectory() + "\\Logs"
             };
-            string local = CallStackExtraction(level);
             DirectoryInfo log = new DirectoryInfo(cfg.DiretorioLogs);
             if (log.Exists)
             {
                 sDiretorioLog = log.FullName;
             }
-            try
-            {
-                var line = $"[{DateTime.Now}][{level.ToString()}][{local}|'{msgToLog}']";
-                StoreLineInFile(sDiretorioLog, line);
-            }
-            catch (Exception ex)
-            {
-                NCELFailToLog(msgToLog, local, ex);
-                Console.WriteLine($"Fail to Log With current config, trying to log in this path{DefaultLogFilePath}");
-            }
+            return sDiretorioLog;
         }
         private static string CallStackExtraction(LogLevel level)
         {
@@ -96,16 +99,5 @@ namespace ncel
         }
         public static readonly string DefaultLogFilePath = $"{System.IO.Path.GetTempPath()}\\NCELFailToLog";
         // Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-    }
-    enum LogLevel
-    {
-        Emergency,
-        Alerts,
-        Critical,
-        Error,
-        Warning,
-        Notification,
-        Information,
-        Debug,
     }
 }
