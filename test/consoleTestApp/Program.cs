@@ -10,18 +10,18 @@ namespace consoleTestApp
             
             string msgToLog = "Hello World!";
             Console.WriteLine(msgToLog);
-            Logs.Information(msgToLog);
+            Log.Information(msgToLog);
             Metodo1("Chamando Metodo1");
         }
         public static void Metodo1(string msg)
         {
-            Logs.Information(msg);
+            Log.Information(msg);
             Metodo2("Chamando metodo2");
         }
 
         public static void Metodo2(string msg)
         {
-            Logs.Information(msg);
+            Log.Information(msg);
         }
     }
 }

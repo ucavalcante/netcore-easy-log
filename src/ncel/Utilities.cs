@@ -1,27 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace ncel
 {
-    public static class Logs
+    public static class Utilities
     {
-        public static void Information(string msgToLog)
-        {
-            var level = LogLevel.Information;
-            try
-            {
-                var line = $"[{DateTime.Now}][{level.ToString()}][{CallStackExtraction(level)}|'{msgToLog}']";
-                StoreLineInFile(DestinationPath(), line);
-            }
-            catch (Exception ex)
-            {
-                NCELFailToLog(msgToLog, CallStackExtraction(level), ex);
-                Console.WriteLine($"Fail to Log With current config, trying to log in this path{DefaultLogFilePath}");
-            }
-        }
-        private static string DestinationPath()
+        public static string DestinationPath()
         {
             string sDiretorioLog = Directory.GetCurrentDirectory() + "\\Logs";
             //ToDo Create a config method
@@ -36,7 +24,7 @@ namespace ncel
             }
             return sDiretorioLog;
         }
-        private static string CallStackExtraction(LogLevel level)
+        public static string CallStackExtraction(LogLevel level)
         {
             var StackSequence = "";
             var name = Assembly.GetExecutingAssembly().GetName();
@@ -62,7 +50,7 @@ namespace ncel
             }
             return local;
         }
-        private static void StoreLineInFile(string sDiretorioLog, string line)
+        public static void StoreLineInFile(string sDiretorioLog, string line)
         {
             DirectoryInfo diretoriolog = new DirectoryInfo(sDiretorioLog);
             if (!diretoriolog.Exists)
@@ -74,8 +62,9 @@ namespace ncel
                 sw.WriteLine(line);
             }
         }
-        private static void NCELFailToLog(string msgToLog, string local, Exception ex)
+        public static void NCELFailToLog(string msgToLog, string local, Exception ex)
         {
+            Console.WriteLine($"Fail to Log With current config, trying to log in this path{DefaultLogFilePath}");
             DirectoryInfo diretoriolog = new DirectoryInfo(DefaultLogFilePath);
             if (!diretoriolog.Exists)
             {
@@ -97,7 +86,6 @@ namespace ncel
                 sw.WriteLine();
             }
         }
-        public static readonly string DefaultLogFilePath = $"{System.IO.Path.GetTempPath()}\\NCELFailToLog";
-        // Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        private static readonly string DefaultLogFilePath = $"{System.IO.Path.GetTempPath()}\\NCELFailToLog";
     }
 }

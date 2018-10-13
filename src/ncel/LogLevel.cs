@@ -1,6 +1,6 @@
 namespace ncel
 {
-    enum LogLevel
+    public enum LogLevel
     {
         Emergency,
         Alert,
