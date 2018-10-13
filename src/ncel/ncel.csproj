@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>AppLogger</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Ulisses Cavalcante</Authors>
+    <Company>uCavalcante</Company>
   </PropertyGroup>
 
 </Project>
