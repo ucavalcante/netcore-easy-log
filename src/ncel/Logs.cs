@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 
 namespace ncel
 {
-    class Logs
+    public static class Logs
     {
         public static void Information(string msgToLog)
         {
+            var level = LogLevel.Information;
             string sDiretorioLog = Directory.GetCurrentDirectory() + "\\Logs";
             //ToDo Create a config method
             var cfg = new
             {
                 DiretorioLogs = Directory.GetCurrentDirectory() + "\\Logs"
             };
-            //ToDo Create a way to Get Previous caller Method
-            var local = new StackFrame(1, true).GetMethod().Name;
+            string local = CallStackExtraction(level);
             DirectoryInfo log = new DirectoryInfo(cfg.DiretorioLogs);
             if (log.Exists)
             {
@@ -23,7 +24,7 @@ namespace ncel
             }
             try
             {
-                var line = $"[{DateTime.Now}][INFO][{local}][{msgToLog}]";
+                var line = $"[{DateTime.Now}][{level.ToString()}][{local}|'{msgToLog}']";
                 StoreLineInFile(sDiretorioLog, line);
             }
             catch (Exception ex)
@@ -31,6 +32,32 @@ namespace ncel
                 NCELFailToLog(msgToLog, local, ex);
                 Console.WriteLine($"Fail to Log With current config, trying to log in this path{DefaultLogFilePath}");
             }
+        }
+        private static string CallStackExtraction(LogLevel level)
+        {
+            var StackSequence = "";
+            var name = Assembly.GetExecutingAssembly().GetName();
+            StackTrace stackTrace = new StackTrace(); // get call stack
+            StackFrame[] stackFrames = stackTrace.GetFrames();
+            var previowsFrame = stackFrames[2].GetMethod().Name;
+            for (int i = (stackFrames.Length - 1); i > 1; i--)
+            {
+                Console.WriteLine(stackFrames[i].GetMethod().Name); // write method name
+                StackSequence = $"{StackSequence}{stackFrames[i].GetMethod().Name}().";
+            }
+            var local = "";
+            StackSequence = StackSequence.Remove(StackSequence.Length - 1);
+            switch (level)
+            {
+                case LogLevel.Information:
+                    local = $"{Process.GetCurrentProcess().ProcessName}|{previowsFrame}";
+                    break;
+
+                default:
+                    local = $"{Process.GetCurrentProcess().ProcessName}|{previowsFrame}|{StackSequence}";
+                    break;
+            }
+            return local;
         }
         private static void StoreLineInFile(string sDiretorioLog, string line)
         {
@@ -69,5 +96,16 @@ namespace ncel
         }
         public static readonly string DefaultLogFilePath = $"{System.IO.Path.GetTempPath()}\\NCELFailToLog";
         // Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+    }
+    enum LogLevel
+    {
+        Emergency,
+        Alerts,
+        Critical,
+        Error,
+        Warning,
+        Notification,
+        Information,
+        Debug,
     }
 }
