@@ -11,18 +11,22 @@ namespace ncel
     {
         public static string DestinationPath()
         {
-            string sDiretorioLog = Directory.GetCurrentDirectory() + "\\Logs";
             //ToDo Create a config method
             var cfg = new
             {
-                DiretorioLogs = Directory.GetCurrentDirectory() + "\\Logs"
+                LogPath = $"{Directory.GetCurrentDirectory()}\\Logs"
             };
-            DirectoryInfo log = new DirectoryInfo(cfg.DiretorioLogs);
-            if (log.Exists)
+            DirectoryInfo WorkDir = new DirectoryInfo(cfg.LogPath);
+            if (!WorkDir.Exists)
             {
-                sDiretorioLog = log.FullName;
+                var tempDir = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\Logs");
+                if (!tempDir.Exists)
+                {
+                    tempDir.Create();
+                    WorkDir = tempDir;
+                }
             }
-            return sDiretorioLog;
+            return $"{WorkDir}\\{System.AppDomain.CurrentDomain.FriendlyName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log";
         }
         public static string CallStackExtraction(LogLevel level)
         {
@@ -33,7 +37,6 @@ namespace ncel
             var previowsFrame = stackFrames[2].GetMethod().Name;
             for (int i = (stackFrames.Length - 1); i > 1; i--)
             {
-                Console.WriteLine(stackFrames[i].GetMethod().Name); // write method name
                 StackSequence = $"{StackSequence}{stackFrames[i].GetMethod().Name}().";
             }
             var local = "";
@@ -50,19 +53,9 @@ namespace ncel
             }
             return local;
         }
-        public static void StoreLineInFile(string sDiretorioLog, string line)
-        {
-            DirectoryInfo diretoriolog = new DirectoryInfo(sDiretorioLog);
-            if (!diretoriolog.Exists)
-            {
-                diretoriolog.Create();
-            }
-            using (StreamWriter sw = File.AppendText($"{diretoriolog}\\Log_{Process.GetCurrentProcess().ProcessName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log"))
-            {
-                sw.WriteLine(line);
-            }
-        }
-        public static void NCELFailToLog(string msgToLog, string local, Exception ex)
+
+
+        public static void NCELFailToLog(Exception ex, string msgToLog)
         {
             Console.WriteLine($"Fail to Log With current config, trying to log in this path{DefaultLogFilePath}");
             DirectoryInfo diretoriolog = new DirectoryInfo(DefaultLogFilePath);
@@ -70,11 +63,12 @@ namespace ncel
             {
                 diretoriolog.Create();
             }
-            using (StreamWriter sw = new StreamWriter(diretoriolog + "\\" + "LogError_" + Process.GetCurrentProcess().ProcessName + "_" + DateTime.Now.ToString("yyyy_MM_dd") + ".log"))
+            var file = $"{diretoriolog}\\{System.AppDomain.CurrentDomain.FriendlyName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log";
+            using (StreamWriter sw = new StreamWriter(file))
             {
                 sw.WriteLine();
                 sw.WriteLine($"-------{DateTime.Now}-------");
-                sw.WriteLine($"----------{local}----------");
+                sw.WriteLine($"---Fail to record in:{DestinationPath()}");
                 sw.WriteLine();
                 sw.WriteLine(msgToLog);
                 sw.WriteLine();
