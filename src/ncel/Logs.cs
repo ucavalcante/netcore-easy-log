@@ -10,7 +10,8 @@ namespace ncel
         {
             string sDiretorioLog = Directory.GetCurrentDirectory() + "\\Logs";
             //ToDo Create a config method
-            var cfg = new {
+            var cfg = new
+            {
                 DiretorioLogs = Directory.GetCurrentDirectory() + "\\Logs"
             };
             //ToDo Create a way to Get Previous caller Method
@@ -23,41 +24,50 @@ namespace ncel
             try
             {
                 var line = $"[{DateTime.Now}][INFO][{local}][{msgToLog}]";
-                DirectoryInfo diretoriolog = new DirectoryInfo(sDiretorioLog);
-                if (!diretoriolog.Exists)
-                {
-                    diretoriolog.Create();
-                }
-                using (StreamWriter sw = File.AppendText($"{diretoriolog}\\Log_{Process.GetCurrentProcess().ProcessName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log"))
-                {
-                    sw.WriteLine(line);
-                }
+                StoreLineInFile(sDiretorioLog, line);
             }
             catch (Exception ex)
             {
-                DirectoryInfo diretoriolog = new DirectoryInfo(DefaultLogFilePath);
-                if (!diretoriolog.Exists)
-                {
-                    diretoriolog.Create();
-                }
-                using (StreamWriter sw = new StreamWriter(diretoriolog + "\\" + "LogError_" + Process.GetCurrentProcess().ProcessName + "_" + DateTime.Now.ToString("yyyy_MM_dd") + ".log"))
-                {
-                    sw.WriteLine();
-                    sw.WriteLine("-------" + DateTime.Now + "-------");
-                    sw.WriteLine("----------" + local + "----------");
-                    sw.WriteLine();
-                    sw.WriteLine(msgToLog);
-                    sw.WriteLine();
-                    sw.WriteLine("--------------------------------");
-                    sw.WriteLine();
-                    sw.WriteLine(ex.Message);
-                    sw.WriteLine();
-                    sw.WriteLine("--------------------------------");
-                    sw.WriteLine();
-                }
+                NCELFailToLog(msgToLog, local, ex);
+                Console.WriteLine($"Fail to Log With current config, trying to log in this path{DefaultLogFilePath}");
             }
         }
-        public static readonly string DefaultLogFilePath = System.IO.Path.GetTempPath();
+        private static void StoreLineInFile(string sDiretorioLog, string line)
+        {
+            DirectoryInfo diretoriolog = new DirectoryInfo(sDiretorioLog);
+            if (!diretoriolog.Exists)
+            {
+                diretoriolog.Create();
+            }
+            using (StreamWriter sw = File.AppendText($"{diretoriolog}\\Log_{Process.GetCurrentProcess().ProcessName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log"))
+            {
+                sw.WriteLine(line);
+            }
+        }
+        private static void NCELFailToLog(string msgToLog, string local, Exception ex)
+        {
+            DirectoryInfo diretoriolog = new DirectoryInfo(DefaultLogFilePath);
+            if (!diretoriolog.Exists)
+            {
+                diretoriolog.Create();
+            }
+            using (StreamWriter sw = new StreamWriter(diretoriolog + "\\" + "LogError_" + Process.GetCurrentProcess().ProcessName + "_" + DateTime.Now.ToString("yyyy_MM_dd") + ".log"))
+            {
+                sw.WriteLine();
+                sw.WriteLine($"-------{DateTime.Now}-------");
+                sw.WriteLine($"----------{local}----------");
+                sw.WriteLine();
+                sw.WriteLine(msgToLog);
+                sw.WriteLine();
+                sw.WriteLine("--------------------------------");
+                sw.WriteLine();
+                sw.WriteLine(ex.Message);
+                sw.WriteLine();
+                sw.WriteLine("--------------------------------");
+                sw.WriteLine();
+            }
+        }
+        public static readonly string DefaultLogFilePath = $"{System.IO.Path.GetTempPath()}\\NCELFailToLog";
         // Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
     }
 }
