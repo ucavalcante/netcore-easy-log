@@ -6,6 +6,7 @@
     <Version>0.1.0</Version>
     <Authors>Ulisses Cavalcante</Authors>
     <Company>uCavalcante</Company>
+    <RepositoryUrl>https://github.com/ucavalcante/netcore-easy-log</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
