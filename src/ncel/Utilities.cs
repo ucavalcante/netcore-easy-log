@@ -34,7 +34,7 @@ namespace ncel
             var name = Assembly.GetExecutingAssembly().GetName();
             StackTrace stackTrace = new StackTrace(); // get call stack
             StackFrame[] stackFrames = stackTrace.GetFrames();
-            var previowsFrame = stackFrames[2].GetMethod().Name;
+            var previowsFrame = stackFrames[3].GetMethod().Name;
             for (int i = (stackFrames.Length - 1); i > 1; i--)
             {
                 StackSequence = $"{StackSequence}{stackFrames[i].GetMethod().Name}().";
@@ -44,11 +44,11 @@ namespace ncel
             switch (level)
             {
                 case LogLevel.Information:
-                    local = $"{Process.GetCurrentProcess().ProcessName}|{previowsFrame}";
+                    local = $"{System.AppDomain.CurrentDomain.FriendlyName}|{previowsFrame}";
                     break;
 
                 default:
-                    local = $"{Process.GetCurrentProcess().ProcessName}|{previowsFrame}|{StackSequence}";
+                    local = $"{System.AppDomain.CurrentDomain.FriendlyName}|{previowsFrame}|{StackSequence}";
                     break;
             }
             return local;
