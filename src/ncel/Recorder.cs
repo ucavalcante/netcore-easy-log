@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace ncel
+namespace Ncel
 {
     public class Recorder
     {

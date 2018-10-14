@@ -1,5 +1,5 @@
 ﻿using System;
-using ncel;
+using Ncel;
 
 namespace consoleTestApp
 {

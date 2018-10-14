@@ -1,4 +1,4 @@
-namespace ncel
+namespace Ncel
 {
     public enum LogLevel
     {
