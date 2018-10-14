@@ -8,6 +8,8 @@
     <Company>uCavalcante</Company>
     <RepositoryUrl>https://github.com/ucavalcante/netcore-easy-log</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyName>Ncel</AssemblyName>
+    <RootNamespace>Ncel</RootNamespace>
   </PropertyGroup>
 
 </Project>

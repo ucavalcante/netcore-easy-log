@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace ncel
+namespace Ncel
 {
     public static class Utilities
     {

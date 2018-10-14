@@ -1,4 +1,4 @@
-﻿namespace ncel
+﻿namespace Ncel
 {
     public static class Log
     {
