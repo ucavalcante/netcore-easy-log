@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 - Add this Changelog file \o/
 - Add badges on [README](https://github.com/ucavalcante/netcore-easy-log/blob/master/README.md)
 - Add Xunit Test for testFile generating and information recorded.
+### Removed
+- Remove previous console project used for testing.
 
 ## [0.1.3] - 2018-12-08
 ### Added
