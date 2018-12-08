@@ -4,8 +4,8 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- edit this value to change the current major.minor version -->
-    <VersionPrefix>0.1.3</VersionPrefix>
-   </PropertyGroup>
+    <VersionPrefix>0.1.4</VersionPrefix>
+  </PropertyGroup>
   <Choose>
     <When Condition=" '$(Prerelease)' != '' ">
       <PropertyGroup>
