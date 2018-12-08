@@ -1,6 +1,9 @@
 # Netcore Easy Log - Easy way to log info in dotnet app
+[![Build status](https://dev.azure.com/ucavalcante/netcore-easy-log/_apis/build/status/netcore-easy-log-.NET%20Desktop-CI)](https://dev.azure.com/ucavalcante/netcore-easy-log/_build/latest?definitionId=4)
+[![GitHub stars](https://img.shields.io/github/stars/ucavalcante/netcore-easy-log.svg)](https://github.com/ucavalcante/netcore-easy-log/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/ucavalcante/netcore-easy-log.svg)](https://github.com/ucavalcante/netcore-easy-log/issues)
 
-This is only easy way to put log on your app you currently work only with file generate a **".log"** on your app folder
+This is only easy way to put log on your app, currently work only with file generate a **".log"** on your app folder
 
 To use this you have to have at least .NET Core 2.0
 
@@ -27,5 +30,4 @@ dotnet add package NetCoreEasyLog --version 0.1.0
 ```
 
 ## Maintainers/Core team
-
-* [@uCavalcante7](https://twitter.com/uCavalcante7)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/ucavalcante/netcore-easy-log.svg?style=popout)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fucavalcante%2Fnetcore-easy-log)
