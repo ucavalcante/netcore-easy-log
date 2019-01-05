@@ -6,12 +6,7 @@ namespace Ncel
     {
         public static void Information(string msgToLog)
         {
-            var level = LogLevel.Information;
-            Recorder.StoreLineInFile(level, msgToLog);
-            if (LogConfig.WriteConsole)
-            {
-                Console.WriteLine($"{level}:{msgToLog}");
-            }
+            Recorder.StoreLineInFile(LogLevel.Information, msgToLog);
         }
     }
 }
