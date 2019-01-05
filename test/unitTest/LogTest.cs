@@ -22,12 +22,11 @@ namespace unitTest
         public void LogRecordProperInformationInfile()
         {
             //Given
-            var x = File.ReadLines(Utilities.DestinationPath()).Last();
-            var y = "123 Testando";
+            var x = "123 Testando";
             //When
-            Log.Information(y);
+            Log.Information(x);
             //Then
-            Assert.True(x.Contains(y));
+            Assert.Contains(x, File.ReadLines(Utilities.DestinationPath()).Last());
         }
     }
 }
