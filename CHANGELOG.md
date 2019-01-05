@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2019-01-05
+### Added
+- Add Log.Error(string) function with stack sequence to track the error.
+- Add Config.WriteConsole configuration for centralize the way to log that info.
+
 ## [0.1.4] - 2018-12-08
 ### Added
 - Add this Changelog file \o/
@@ -21,7 +26,6 @@ All notable changes to this project will be documented in this file.
         Emergency,
         Alert,
         Critical,
-        Error,
         Warning,
         Notification,
         Debug

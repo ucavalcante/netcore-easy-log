@@ -26,7 +26,7 @@ Log.Information(string);
 
 
 ```bash
-dotnet add package NetCoreEasyLog --version 0.1.0
+dotnet add package NetCoreEasyLog
 ```
 
 ## Maintainers/Core team
