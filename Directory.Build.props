@@ -7,6 +7,12 @@
     <VersionPrefix>0.2.0</VersionPrefix>
   </PropertyGroup>
   <Choose>
+    <When Condition=" '$(Prerelease)' == 'release' ">
+      <PropertyGroup>
+        <!-- Prerelease version numbers are MAJOR.MINOR.0-pre-build###### -->
+        <VersionSuffix>$(Prerelease)</VersionSuffix>
+      </PropertyGroup>
+    </When>
     <When Condition=" '$(Prerelease)' != '' ">
       <PropertyGroup>
         <!-- Prerelease version numbers are MAJOR.MINOR.0-pre-build###### -->
