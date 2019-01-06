@@ -32,6 +32,16 @@ namespace unitTest
             Assert.Contains(x, File.ReadLines(Utilities.DestinationPath()).Last());
         }
         [Fact]
+        public void LogRecordProperErrorInfile()
+        {
+            //Given
+            var x = $"{faker.Random.Number(1,100)} Testando";
+            //When
+            Log.Error(x);
+            //Then
+            Assert.Contains(x, File.ReadLines(Utilities.DestinationPath()).Last());
+        }
+        [Fact]
         public void LogConsoleMessageActivate()
         {
             //Given
@@ -57,5 +67,6 @@ namespace unitTest
             //Then
             Assert.DoesNotContain(x, y.ToString());
         }
+        
     }
 }

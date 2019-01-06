@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2019-01-06
+### Changed
+- Change build configuration for use releaseid in ci/cd.
+
+## [0.2.1] - 2019-01-06
+### Changed
+- Change build configuration for autoversion to ci/cd.
+
 ## [0.2.0] - 2019-01-05
 ### Added
 - Add Log.Error(string) function with stack sequence to track the error.
