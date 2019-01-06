@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2019-01-06
+### Changed
+- Change build configuration for use releaseid in ci/cd.
+
 ## [0.2.1] - 2019-01-06
 ### Changed
 - Change build configuration for autoversion to ci/cd.

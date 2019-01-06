@@ -4,15 +4,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- edit this value to change the current major.minor version -->
-    <VersionPrefix>0.2.1</VersionPrefix>
+    <VersionPrefix>0.2.2</VersionPrefix>
   </PropertyGroup>
   <Choose>
-    <When Condition=" '$(Prerelease)' == 'release' ">
-      <PropertyGroup>
-        <!-- Prerelease version numbers are MAJOR.MINOR.0-pre-build###### -->
-        <VersionSuffix>$(Prerelease)</VersionSuffix>
-      </PropertyGroup>
-    </When>
     <When Condition=" '$(Prerelease)' != '' ">
       <PropertyGroup>
         <!-- Prerelease version numbers are MAJOR.MINOR.0-pre-build###### -->
@@ -22,7 +16,7 @@
     <Otherwise>
       <PropertyGroup>
         <!-- Release version numbers are MAJOR.MINOR.# -->
-        <VersionPrefix>$(VersionPrefix).$(BUILD_BUILDID.PadLeft(1, '0'))</VersionPrefix>
+        <VersionPrefix>$(VersionPrefix).$(ReleaseId.PadLeft(1, '0'))</VersionPrefix>
       </PropertyGroup>
     </Otherwise>
   </Choose>
