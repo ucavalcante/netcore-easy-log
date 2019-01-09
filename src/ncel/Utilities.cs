@@ -37,7 +37,7 @@ namespace Ncel
                     local = $"{System.AppDomain.CurrentDomain.FriendlyName}|{previowsFrame}";
                     break;
                 case LogLevel.Error:
-                    local = $"{System.AppDomain.CurrentDomain.FriendlyName}|{previowsFrame}|{StackSequence}";
+                    local = $"{System.AppDomain.CurrentDomain.FriendlyName}|{previowsFrame}";
                     break;
                 default:
                     local = $"{System.AppDomain.CurrentDomain.FriendlyName}|{previowsFrame}|{StackSequence}";
