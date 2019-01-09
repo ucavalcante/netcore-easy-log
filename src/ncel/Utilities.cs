@@ -11,20 +11,10 @@ namespace Ncel
     {
         public static string DestinationPath()
         {
-            //ToDo Create a config method
-            var cfg = new
-            {
-                LogPath = $"{Directory.GetCurrentDirectory()}\\Logs"
-            };
-            DirectoryInfo WorkDir = new DirectoryInfo(cfg.LogPath);
+            DirectoryInfo WorkDir = new DirectoryInfo(LogConfig.DirectoryPath);
             if (!WorkDir.Exists)
             {
-                var tempDir = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\Logs");
-                if (!tempDir.Exists)
-                {
-                    tempDir.Create();
-                    WorkDir = tempDir;
-                }
+                WorkDir.Create();
             }
             return $"{WorkDir}\\{System.AppDomain.CurrentDomain.FriendlyName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log";
         }

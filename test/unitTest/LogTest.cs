@@ -17,7 +17,7 @@ namespace unitTest
             var x = new FileInfo(Utilities.DestinationPath());
             x.Delete();
             //When
-            Log.Information($"{faker.Random.Number(1,100)} Testando");
+            Log.Information($"{faker.Random.Number(1, 100)} Testando");
             //Then
             Assert.True(x.Exists);
         }
@@ -25,7 +25,7 @@ namespace unitTest
         public void LogRecordProperInformationInfile()
         {
             //Given
-            var x = $"{faker.Random.Number(1,100)} Testando";
+            var x = $"{faker.Random.Number(1, 100)} Testando";
             //When
             Log.Information(x);
             //Then
@@ -35,7 +35,7 @@ namespace unitTest
         public void LogRecordProperErrorInfile()
         {
             //Given
-            var x = $"{faker.Random.Number(1,100)} Testando";
+            var x = $"{faker.Random.Number(1, 100)} Testando";
             //When
             Log.Error(x);
             //Then
@@ -45,7 +45,7 @@ namespace unitTest
         public void LogConsoleMessageActivate()
         {
             //Given
-            var x = $"{faker.Random.Number(1,100)} Testando";
+            var x = $"{faker.Random.Number(1, 100)} Testando";
             StringWriter y = new StringWriter();
             Console.SetOut(y);
             //When
@@ -58,7 +58,7 @@ namespace unitTest
         public void LogConsoleMessageDeactivated()
         {
             //Given
-            var x = $"{faker.Random.Number(1,100)} Testando";
+            var x = $"{faker.Random.Number(1, 100)} Testando";
             StringWriter y = new StringWriter();
             Console.SetOut(y);
             //When
@@ -67,6 +67,18 @@ namespace unitTest
             //Then
             Assert.DoesNotContain(x, y.ToString());
         }
-        
+        [Fact]
+        public void LogPath()
+        {
+            //Given
+            LogConfig.DirectoryPath = $"{Environment.CurrentDirectory}\\Logs\\{faker.System.DirectoryPath().Remove(0,1).Replace('/','\\')}";
+            var x = new FileInfo(Utilities.DestinationPath());
+            //When
+            Log.Information($"{faker.Random.Number(1, 100)} Testando");
+            System.Threading.Thread.Sleep(1000);
+            //Then
+            Assert.True(x.Exists);
+        }
+
     }
 }
