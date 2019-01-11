@@ -49,7 +49,7 @@ namespace Ncel
 
         public static void NCELFailToLog(Exception ex, string msgToLog)
         {
-            var id  = DateTime.Now.Ticks;
+            var id = DateTime.Now.Ticks;
             Console.WriteLine($"Fail to Log With current config, trying to log in this path:{DefaultLogFilePath}");
             DirectoryInfo diretoriolog = new DirectoryInfo(DefaultLogFilePath);
             if (!diretoriolog.Exists)
@@ -59,11 +59,35 @@ namespace Ncel
             var file = $"{diretoriolog}\\{System.AppDomain.CurrentDomain.FriendlyName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log";
             using (StreamWriter sw = new StreamWriter(file))
             {
+                var name = Assembly.GetExecutingAssembly().GetName();
                 sw.WriteLine($"[{id}][{DateTime.Now}][Fail to record in]:'{DestinationPath()}'");
-                sw.WriteLine($"[{id}][Thrown:]{ex.GetType()}[Message:]{ex.Message}[Data:]{ex.Data}");
-                sw.WriteLine($"[{id}][msgToLog:]{msgToLog}");
+                sw.WriteLine($"[{id}][msgToLog]{msgToLog}");
+                sw.WriteLine($"[{id}][Exception-Thrown]{ex.GetType()}[Message]{ex.Message}[Data]{ex.Data}");
+
+
+                StackTrace stackTrace = new StackTrace(); // get call stack
+                StackFrame[] stackFrames = stackTrace.GetFrames();
+                var previowsFrame = stackFrames[1].GetMethod().Name;
+                for (int i = (stackFrames.Length - 1); i > 0; i--)
+                {
+                    var p = stackFrames[i].GetMethod().GetParameters();
+                    var sp = "";
+                    foreach (var item in p)
+                    {
+                        sp = $"{sp}{item.Name.ToString()},";
+                    }
+                    if (sp.EndsWith(","))
+                    {
+                        sp = sp.Remove(sp.Length - 1);
+                    }
+
+
+                    var msg = $"[{id}][pos:{i}][Class]{stackFrames[i].GetMethod().DeclaringType}[Method]{stackFrames[i].GetMethod().Name}({sp})";
+                    sw.WriteLine(msg);
+                }
+
             }
         }
-        private static readonly string DefaultLogFilePath = $"{System.IO.Path.GetTempPath()}\\NCELFailToLog";
+        private static readonly string DefaultLogFilePath = $"{System.IO.Path.GetTempPath()}NCELFailToLog";
     }
 }

@@ -125,6 +125,5 @@ namespace unitTest
             }
             Assert.Contains(string.Concat(n), ret);
         }
-
     }
 }
