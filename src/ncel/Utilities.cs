@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -24,7 +25,9 @@ namespace Ncel
             var name = Assembly.GetExecutingAssembly().GetName();
             StackTrace stackTrace = new StackTrace(); // get call stack
             StackFrame[] stackFrames = stackTrace.GetFrames();
-            var previowsFrame = stackFrames[3].GetMethod().Name;
+
+            string previowsFrame = GetPreviousFrame(stackFrames);
+
             for (int i = (stackFrames.Length - 1); i > 1; i--)
             {
                 StackSequence = $"{StackSequence}{stackFrames[i].GetMethod().Name}().";
@@ -46,6 +49,36 @@ namespace Ncel
             return local;
         }
 
+        private static string GetPreviousFrame(StackFrame[] stackFrames)
+        {
+            Dictionary<string, int> ignoredMethods = new Dictionary<string, int>();
+
+            ignoredMethods.Add("StoreLineInFile", 0);
+            ignoredMethods.Add("CallStackExtraction", 0);
+            ignoredMethods.Add("GetPreviousFrame", 0);
+
+            ignoredMethods.Add("Emergency", 0);
+            ignoredMethods.Add("Alert", 0);
+            ignoredMethods.Add("Critical", 0);
+            ignoredMethods.Add("Error", 0);
+            ignoredMethods.Add("Warning", 0);
+            ignoredMethods.Add("Notification", 0);
+            ignoredMethods.Add("Information", 0);
+            ignoredMethods.Add("Debug", 0);
+
+            ignoredMethods.ToList().ForEach(e =>
+            {
+                ignoredMethods[e.Key] = stackFrames.ToList().FindIndex(sf => sf.GetMethod().Name == e.Key);
+            });
+            try
+            {
+                return stackFrames[ignoredMethods.Max(x => x.Value) > stackFrames.Length ? stackFrames.Length : ignoredMethods.Max(x => x.Value) + 1].GetMethod().Name;
+            }
+            catch (System.Exception ex)
+            {
+                return $">Error to get MethodName:{ex.Message}<";
+            }
+        }
 
         public static void NCELFailToLog(Exception ex, string msgToLog)
         {
@@ -64,11 +97,10 @@ namespace Ncel
                 sw.WriteLine($"[{id}][msgToLog]{msgToLog}");
                 sw.WriteLine($"[{id}][Exception-Thrown]{ex.GetType()}[Message]{ex.Message}[Data]{ex.Data}");
 
-
                 StackTrace stackTrace = new StackTrace(); // get call stack
                 StackFrame[] stackFrames = stackTrace.GetFrames();
                 var previowsFrame = stackFrames[1].GetMethod().Name;
-                for (int i = (stackFrames.Length - 1); i > 0; i--)
+                for (int i = (stackFrames.Length - 1); i >= 0; i--)
                 {
                     var p = stackFrames[i].GetMethod().GetParameters();
                     var sp = "";
