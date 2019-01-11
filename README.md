@@ -20,6 +20,7 @@ using ncel;
 and this is how to use in your code.
 ```bash
 Log.Information(string);
+Log.Error(string);
 ```
 
 ## Install
