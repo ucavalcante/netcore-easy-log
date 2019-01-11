@@ -49,7 +49,8 @@ namespace Ncel
 
         public static void NCELFailToLog(Exception ex, string msgToLog)
         {
-            Console.WriteLine($"Fail to Log With current config, trying to log in this path{DefaultLogFilePath}");
+            var id  = DateTime.Now.Ticks;
+            Console.WriteLine($"Fail to Log With current config, trying to log in this path:{DefaultLogFilePath}");
             DirectoryInfo diretoriolog = new DirectoryInfo(DefaultLogFilePath);
             if (!diretoriolog.Exists)
             {
@@ -58,18 +59,9 @@ namespace Ncel
             var file = $"{diretoriolog}\\{System.AppDomain.CurrentDomain.FriendlyName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log";
             using (StreamWriter sw = new StreamWriter(file))
             {
-                sw.WriteLine();
-                sw.WriteLine($"-------{DateTime.Now}-------");
-                sw.WriteLine($"---Fail to record in:{DestinationPath()}");
-                sw.WriteLine();
-                sw.WriteLine(msgToLog);
-                sw.WriteLine();
-                sw.WriteLine("--------------------------------");
-                sw.WriteLine();
-                sw.WriteLine(ex.Message);
-                sw.WriteLine();
-                sw.WriteLine("--------------------------------");
-                sw.WriteLine();
+                sw.WriteLine($"[{id}][{DateTime.Now}][Fail to record in]:'{DestinationPath()}'");
+                sw.WriteLine($"[{id}][Thrown:]{ex.GetType()}[Message:]{ex.Message}[Data:]{ex.Data}");
+                sw.WriteLine($"[{id}][msgToLog:]{msgToLog}");
             }
         }
         private static readonly string DefaultLogFilePath = $"{System.IO.Path.GetTempPath()}\\NCELFailToLog";

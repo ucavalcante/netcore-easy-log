@@ -88,7 +88,7 @@ namespace unitTest
             //Given
             var d = new DirectoryInfo($"{System.IO.Path.GetTempPath()}\\NCELFailToLog");
             if (d.Exists) d.Delete(true);
-            var e = new Exception();
+            var e = faker.System.Exception();
             var m = faker.Lorem.Words(5).ToList();
             var n = new List<string>();
             m.ForEach(c =>
@@ -107,7 +107,7 @@ namespace unitTest
             //Given
             var d = new DirectoryInfo($"{System.IO.Path.GetTempPath()}\\NCELFailToLog");
             if (d.Exists) d.Delete(true);
-            var e = new Exception();
+            var e = faker.System.Exception();
             var m = faker.Lorem.Words(5).ToList();
             var n = new List<string>();
             m.ForEach(c =>
