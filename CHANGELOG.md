@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.2] - 2019-01-11
+### Added
+- Add StackTrace data in NCELFailToLog.
+
 ## [0.3.1] - 2019-01-09
 ### Removed
 - Remove StackSequence from Log.Error
