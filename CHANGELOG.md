@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 - Add LogConfig.DirectoryPath to change default path to log.
 ### Removed
 - Remove StackSequence from Log.Error
+### Changed
+- Record layout when fail to record in default path.
 
 ## [0.2.2] - 2019-01-06
 ### Changed
