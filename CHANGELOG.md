@@ -1,6 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.3] - 2019-01-11
+### Fixed
+- Fix the way to get Method Name.
+
+## [0.3.2] - 2019-01-11
+### Added
+- Add StackTrace data in NCELFailToLog.
+
+## [0.3.1] - 2019-01-09
+### Removed
+- Remove StackSequence from Log.Error
+### Changed
+- Record layout when fail to record in default path.
+
 ## [0.3.0] - 2019-01-09
 ### Added
 - Add LogConfig.DirectoryPath to change default path to log.
