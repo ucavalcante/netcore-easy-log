@@ -83,25 +83,6 @@ namespace unitTest
             Assert.True(x.Exists);
         }
         [Fact]
-        public void MainWriterFailAlternativeLogGeneratesFile()
-        {
-            //Given
-            var d = new DirectoryInfo($"{System.IO.Path.GetTempPath()}\\NCELFailToLog");
-            if (d.Exists) d.Delete(true);
-            var e = faker.System.Exception();
-            var m = faker.Lorem.Words(5).ToList();
-            var n = new List<string>();
-            m.ForEach(c =>
-            {
-                n.Add(c + " ");
-            });
-            //When
-            Utilities.NCELFailToLog(e, string.Concat(n));
-            //Then
-            Assert.True(d.Exists);
-            Assert.True(d.GetFiles().Count() > 0);
-        }
-        [Fact]
         public void MainWriterFailAlternativeProperInformationInfile()
         {
             //Given
