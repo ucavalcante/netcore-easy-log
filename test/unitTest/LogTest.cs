@@ -72,9 +72,9 @@ namespace unitTest
         public void LogPath()
         {
             //Given
-            var d = new DirectoryInfo($"{Environment.CurrentDirectory}\\LogPath");
+            var d = new DirectoryInfo($"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}LogPath");
             if (d.Exists) d.Delete(true);
-            LogConfig.DirectoryPath = $"{d.FullName}\\{faker.System.DirectoryPath().Remove(0, 1).Replace('/', '\\')}";
+            LogConfig.DirectoryPath = $"{d.FullName}{Path.DirectorySeparatorChar}{faker.System.DirectoryPath().Remove(0, 1).Replace('/', Path.DirectorySeparatorChar)}";
             var x = new FileInfo(Utilities.DestinationPath());
             //When
             Log.Information($"{faker.Random.Number(1, 100)} Testando");
@@ -86,7 +86,7 @@ namespace unitTest
         public void MainWriterFailAlternativeProperInformationInfile()
         {
             //Given
-            var d = new DirectoryInfo($"{System.IO.Path.GetTempPath()}\\NCELFailToLog");
+            var d = new DirectoryInfo($"{System.IO.Path.GetTempPath()}{Path.DirectorySeparatorChar}NCELFailToLog");
             if (d.Exists) d.Delete(true);
             var e = faker.System.Exception();
             var m = faker.Lorem.Words(5).ToList();
