@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.3.4] - 2019-07-29
+### Fixed
+- Fix the way to get directory separator.
+
 ## [0.3.3] - 2019-01-11
 ### Fixed
 - Fix the way to get Method Name.

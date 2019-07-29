@@ -17,7 +17,7 @@ namespace Ncel
             {
                 WorkDir.Create();
             }
-            return $"{WorkDir}\\{System.AppDomain.CurrentDomain.FriendlyName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log";
+            return $"{WorkDir}{Path.DirectorySeparatorChar}{System.AppDomain.CurrentDomain.FriendlyName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log";
         }
         public static string CallStackExtraction(LogLevel level)
         {
@@ -89,7 +89,7 @@ namespace Ncel
             {
                 diretoriolog.Create();
             }
-            var file = $"{diretoriolog}\\{System.AppDomain.CurrentDomain.FriendlyName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log";
+            var file = $"{diretoriolog}{Path.DirectorySeparatorChar}{System.AppDomain.CurrentDomain.FriendlyName}_{DateTime.Now.ToString("yyyy_MM_dd")}.log";
             using (StreamWriter sw = new StreamWriter(file))
             {
                 var name = Assembly.GetExecutingAssembly().GetName();
